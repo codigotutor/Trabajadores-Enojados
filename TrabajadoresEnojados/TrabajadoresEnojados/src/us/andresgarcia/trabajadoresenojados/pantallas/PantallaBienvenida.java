@@ -56,7 +56,6 @@ public class PantallaBienvenida implements Screen {
 		imagenBienvenida = new Texture("data/pantallaBienvenida.png");
 		imagenBienvenida.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		
-		
 		objetoBienvenida = new Sprite(imagenBienvenida);
 		objetoBienvenida.setColor(1, 1, 1, 0);
 		
@@ -78,8 +77,6 @@ public class PantallaBienvenida implements Screen {
 				interpolacionCompletada();
 				
 			}
-
-
 		};
 		
 	

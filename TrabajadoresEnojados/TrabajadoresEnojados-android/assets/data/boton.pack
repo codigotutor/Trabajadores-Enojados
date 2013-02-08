@@ -1,0 +1,19 @@
+
+boton.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+botonNormal
+  rotate: false
+  xy: 1, 1
+  size: 83, 83
+  orig: 83, 83
+  offset: 0, 0
+  index: -1
+botonPresionado
+  rotate: false
+  xy: 86, 1
+  size: 83, 83
+  orig: 83, 83
+  offset: 0, 0
+  index: -1
