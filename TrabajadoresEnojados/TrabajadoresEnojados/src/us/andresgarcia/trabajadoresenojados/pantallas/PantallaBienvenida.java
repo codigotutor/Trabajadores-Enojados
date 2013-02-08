@@ -3,7 +3,9 @@ package us.andresgarcia.trabajadoresenojados.pantallas;
 import us.andresgarcia.trabajadoresenojados.TrabajadoresEnojados;
 import us.andresgarcia.trabajadoresenojados.efectos.InterpolacionAcceso;
 
+import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
 
@@ -57,6 +59,9 @@ public class PantallaBienvenida implements Screen {
 		
 		objetoBienvenida = new Sprite(imagenBienvenida);
 		objetoBienvenida.setColor(1, 1, 1, 0);
+		
+		objetoBienvenida.setX(Gdx.graphics.getWidth()/2 - (objetoBienvenida.getWidth() /2));
+		objetoBienvenida.setY(Gdx.graphics.getHeight()/2 - (objetoBienvenida.getHeight() /2));
 		//objetoBienvenida.setOrigin(objetoBienvenida.getWidth()/2, objetoBienvenida.getHeight()/2);
 		//objetoBienvenida.setPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
 		
@@ -66,7 +71,31 @@ public class PantallaBienvenida implements Screen {
 		
 		administradorInterpolacion = new TweenManager();
 		
-		Tween.to(objetoBienvenida, InterpolacionAcceso.ALPHA, 2f).target(1).ease(TweenEquations.easeInQuad).start(administradorInterpolacion);
+		TweenCallback observadorInterpolacion = new TweenCallback() {
+			
+			@Override
+			public void onEvent(int tipo, BaseTween<?> fuente) {
+				interpolacionCompletada();
+				
+			}
+
+
+		};
+		
+	
+		Tween.to(objetoBienvenida, InterpolacionAcceso.ALPHA, 2f).
+		target(1).
+		ease(TweenEquations.easeInQuad).
+		repeatYoyo(1, 2.5f).
+		setCallback(observadorInterpolacion).
+		setCallbackTriggers(TweenCallback.COMPLETE).
+		start(administradorInterpolacion);
+	}
+	
+	
+	private void interpolacionCompletada() {
+		juego.setScreen(new PantallaMenuPrincipal(juego));
+		
 	}
 
 	@Override
