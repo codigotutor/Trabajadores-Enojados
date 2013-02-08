@@ -1,0 +1,2 @@
+# Module us.andresgarcia.trabajadoresenojados.GwtDefinition
+# RPC service class, partial path of RPC policy file
