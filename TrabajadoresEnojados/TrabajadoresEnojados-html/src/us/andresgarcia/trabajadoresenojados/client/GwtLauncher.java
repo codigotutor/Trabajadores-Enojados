@@ -1,6 +1,6 @@
 package us.andresgarcia.trabajadoresenojados.client;
 
-import us.andresgarcia.trabajadoresenojados.TrabajadoresEnojadosGame;
+import us.andresgarcia.trabajadoresenojados.TrabajadoresEnojados;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
@@ -14,6 +14,6 @@ public class GwtLauncher extends GwtApplication {
 
 	@Override
 	public ApplicationListener getApplicationListener () {
-		return new TrabajadoresEnojadosGame();
+		return new TrabajadoresEnojados();
 	}
 }

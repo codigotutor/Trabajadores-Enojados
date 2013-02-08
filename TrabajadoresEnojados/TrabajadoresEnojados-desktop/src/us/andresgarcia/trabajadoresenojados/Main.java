@@ -6,11 +6,11 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 public class Main {
 	public static void main(String[] args) {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-		cfg.title = "TrabajadoresEnojados";
+		cfg.title = "TrabajadoresEnojados" + TrabajadoresEnojados.VERSION;
 		cfg.useGL20 = false;
-		cfg.width = 1080;
-		cfg.height = 720;
+		cfg.width = 800;
+		cfg.height = 600;
 		
-		new LwjglApplication(new TrabajadoresEnojadosGame(), cfg);
+		new LwjglApplication(new TrabajadoresEnojados(), cfg);
 	}
 }
