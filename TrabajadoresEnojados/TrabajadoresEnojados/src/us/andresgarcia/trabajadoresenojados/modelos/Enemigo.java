@@ -8,6 +8,6 @@ public abstract class Enemigo extends EntidadMovible{
 		super(ACELERACION, rotacion, ancho, alto, posicion);
 	}
 	
-	public abstract void avanzar(float delta, Carga carga);
+	public abstract void avanzar(float delta, Nave carga);
 
 }

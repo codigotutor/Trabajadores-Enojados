@@ -79,6 +79,7 @@ public class PantallaMenuPrincipal implements Screen{
 			
 			public void touchUp(InputEvent evento, float x, float y, int apuntador, int boton ){
 				juego.setScreen(new PantallaJuego(juego));
+				
 			}
 			
 			

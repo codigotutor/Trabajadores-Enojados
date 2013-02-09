@@ -31,7 +31,9 @@ public abstract class EntidadMovible extends Entidad {
 	public void setRotacion(float rotacion) {
 		this.rotacion = rotacion;
 	}
-
+	
+	
+	public abstract void update();
 
 	
 	
