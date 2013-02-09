@@ -1,5 +1,6 @@
 package us.andresgarcia.trabajadoresenojados.vistas;
 
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
@@ -13,7 +14,8 @@ public class Mundo {
 	
 	public Mundo(TrabajadoresEnojados juego){
 		this.juego = juego;
-		nave = new Nave(new Vector2(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2),1,1,0,5f);
+		nave = new Nave(new Vector2(5, 5),1,1,0,5f);
+		Gdx.input.setInputProcessor(new ManejadorEntrada(this));
 	}
 	
 	public Nave getNave(){

@@ -14,6 +14,7 @@ public abstract class EntidadMovible extends Entidad {
 		super(posicion, ancho, alto);
 		this.ACELERACION = ACELERACION;
 		this.rotacion = rotacion;
+		velocidad = new Vector2(0,0);
 	}
 
 	public Vector2 getVelocidad() {

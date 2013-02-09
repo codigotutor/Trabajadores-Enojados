@@ -1,7 +1,8 @@
 package us.andresgarcia.trabajadoresenojados;
 
 
-import us.andresgarcia.trabajadoresenojados.pantallas.PantallaBienvenida;
+//import us.andresgarcia.trabajadoresenojados.pantallas.PantallaBienvenida;
+import us.andresgarcia.trabajadoresenojados.pantallas.PantallaJuego;
 
 import com.badlogic.gdx.Game;
 
@@ -13,7 +14,8 @@ public class TrabajadoresEnojados extends Game {
 	
 	@Override
 	public void create() {		
-		setScreen(new PantallaBienvenida(this));
+		//setScreen(new PantallaBienvenida(this));
+		setScreen(new PantallaJuego(this));
 	}
 
 	@Override

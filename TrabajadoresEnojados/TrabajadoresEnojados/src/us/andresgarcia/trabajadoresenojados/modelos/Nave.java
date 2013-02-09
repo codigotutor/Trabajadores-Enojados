@@ -1,5 +1,6 @@
 package us.andresgarcia.trabajadoresenojados.modelos;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
 public class Nave extends EntidadMovible{
@@ -11,7 +12,10 @@ public class Nave extends EntidadMovible{
 	@Override
 	public void update() {
 		
+		posicion.add(velocidad.tmp().mul(Gdx.graphics.getDeltaTime() * ACELERACION));
 		
+		if(velocidad.x != 0 || velocidad.y != 0)
+			rotacion = velocidad.angle() - 90;
 	}
 
 }
