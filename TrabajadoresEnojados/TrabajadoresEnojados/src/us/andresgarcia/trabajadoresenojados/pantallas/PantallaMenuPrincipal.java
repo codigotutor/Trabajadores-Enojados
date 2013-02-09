@@ -4,6 +4,7 @@ import us.andresgarcia.trabajadoresenojados.TrabajadoresEnojados;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -11,9 +12,12 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 
 public class PantallaMenuPrincipal implements Screen{
 
@@ -26,6 +30,7 @@ public class PantallaMenuPrincipal implements Screen{
 	Skin piel;
 	SpriteBatch superficieDibujo;
 	TextButton boton;
+	Label etiqueta;
 	
 	
 	public PantallaMenuPrincipal(TrabajadoresEnojados juego){
@@ -43,14 +48,13 @@ public class PantallaMenuPrincipal implements Screen{
 		
 		superficieDibujo.begin();
 		escena.draw();
-		fuenteBlanca.draw(superficieDibujo, "Trabajadores Enojados", Gdx.graphics.getWidth()/2 - 20, Gdx.graphics.getHeight()/2 - 100);
 		superficieDibujo.end();
 	}
 
 	@Override
-	public void resize(int width, int height) {
+	public void resize(int ancho, int alto) {
 		if(escena == null)
-			escena = new Stage(width,height,true);
+			escena = new Stage(ancho,alto,true);
 		
 		escena.clear();
 		
@@ -81,7 +85,15 @@ public class PantallaMenuPrincipal implements Screen{
 		});
 		
 		
+		LabelStyle estiloEtiqueta = new LabelStyle(fuenteBlanca, Color.WHITE);
+		etiqueta = new Label("Trabajadores Enojados", estiloEtiqueta);
+		etiqueta.setX(0);
+		etiqueta.setY(Gdx.graphics.getHeight()/2 + 100);
+		etiqueta.setWidth(ancho);
+		etiqueta.setAlignment(Align.center);
+		
 		escena.addActor(boton);
+		escena.addActor(etiqueta);
 	}
 
 	@Override

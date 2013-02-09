@@ -1,14 +1,18 @@
 package us.andresgarcia.trabajadoresenojados.pantallas;
 
 import us.andresgarcia.trabajadoresenojados.TrabajadoresEnojados;
+import us.andresgarcia.trabajadoresenojados.vistas.Mundo;
 
 import com.badlogic.gdx.Screen;
 
 public class PantallaJuego implements Screen {
 	
+	TrabajadoresEnojados juego;
+	Mundo mundo;
+	
 	
 	public PantallaJuego(TrabajadoresEnojados juego){
-		
+		this.juego = juego;
 	}
 	
 
