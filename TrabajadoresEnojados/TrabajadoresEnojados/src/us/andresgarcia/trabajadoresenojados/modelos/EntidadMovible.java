@@ -34,7 +34,10 @@ public abstract class EntidadMovible extends Entidad {
 	}
 	
 	
-	public abstract void update();
+	public void update(Nave nave){
+		limites.x = posicion.x;
+		limites.y = posicion.y;
+	}
 
 	
 	

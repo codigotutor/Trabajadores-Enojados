@@ -9,13 +9,18 @@ public class Nave extends EntidadMovible{
 		super(ACELERACION, rotacion, ancho, alto, posicion);
 	}
 
-	@Override
+	
 	public void update() {
 		
 		posicion.add(velocidad.tmp().mul(Gdx.graphics.getDeltaTime() * ACELERACION));
 		
 		if(velocidad.x != 0 || velocidad.y != 0)
 			rotacion = velocidad.angle() - 90;
+		
+		limites.x = posicion.x;
+		limites.y = posicion.y;
+		
+		
 	}
 
 }
