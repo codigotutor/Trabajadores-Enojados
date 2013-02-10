@@ -89,29 +89,15 @@ public class PantallaMenuPrincipal implements Screen{
 		LabelStyle estiloEtiqueta = new LabelStyle(fuenteBlanca, Color.WHITE);
 		
 		
-		etiqueta = new Label("FELIZ CUMPLEAÑOS!!!!!!", estiloEtiqueta);
+		etiqueta = new Label("Trabajadores Enojados", estiloEtiqueta);
 		etiqueta.setX(0);
 		etiqueta.setY(Gdx.graphics.getHeight()/2 + 150);
 		etiqueta.setWidth(ancho);
 		etiqueta.setAlignment(Align.center);
 		
-		etiqueta2 = new Label("Pecosita Hermosa TE AMO", estiloEtiqueta);
-		etiqueta2.setX(0);
-		etiqueta2.setY(Gdx.graphics.getHeight()/2 + 200);
-		etiqueta2.setWidth(ancho);
-		etiqueta2.setAlignment(Align.center);
-		
-		
-		etiqueta3 = new Label("Muuuuuuuuuuuuuaaaaaaaaaaaa", estiloEtiqueta);
-		etiqueta3.setX(0);
-		etiqueta3.setY(Gdx.graphics.getHeight()/2 + 100);
-		etiqueta3.setWidth(ancho);
-		etiqueta3.setAlignment(Align.center);
 		
 		escena.addActor(boton);
 		escena.addActor(etiqueta);
-		escena.addActor(etiqueta2);
-		escena.addActor(etiqueta3);
 	}
 
 	@Override
