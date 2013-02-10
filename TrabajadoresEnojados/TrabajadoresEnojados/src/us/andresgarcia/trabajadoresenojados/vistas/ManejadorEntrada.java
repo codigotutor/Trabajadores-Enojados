@@ -1,14 +1,18 @@
 package us.andresgarcia.trabajadoresenojados.vistas;
 
+import us.andresgarcia.trabajadoresenojados.modelos.Bala;
 import us.andresgarcia.trabajadoresenojados.modelos.Nave;
-
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 public class ManejadorEntrada implements InputProcessor{
 
 	Mundo mundo;
 	Nave nave;
+	Vector3 toque = new Vector3();
+	Vector2 vec2Toque = new Vector2();
 	
 	public ManejadorEntrada(Mundo mundo){
 		this.mundo = mundo;
@@ -79,7 +83,14 @@ public class ManejadorEntrada implements InputProcessor{
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		return false;
+		
+		toque.set(screenX, screenY,0);
+		mundo.getRenderizadorMundo().getCamara().unproject(toque);
+		vec2Toque.set(toque.x, toque.y);
+		nave = mundo.getNave();
+		mundo.addBalas(new Bala(Bala.VELOCIDAD, 0, .1f, 8/20f, new Vector2(nave.getPosicion().x, nave.getPosicion().y), 
+							new Vector2(vec2Toque.sub(nave.getPosicion()).nor())));
+		return true;
 	}
 
 	@Override

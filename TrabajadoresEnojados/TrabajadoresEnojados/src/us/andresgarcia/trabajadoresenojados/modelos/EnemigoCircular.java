@@ -1,9 +1,8 @@
 package us.andresgarcia.trabajadoresenojados.modelos;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
-public class EnemigoCircular extends EntidadMovible {
+public class EnemigoCircular extends Enemigo {
 
 	float VELOCIDAD_ROTACION = 500;
 	
@@ -15,16 +14,17 @@ public class EnemigoCircular extends EntidadMovible {
 	}
 
 	@Override
-	public void update(Nave nave) {
+	public void avanzar(float delta, Nave nave) {
 		
-		posicion.lerp(nave.getPosicion(), Gdx.graphics.getDeltaTime());
+		posicion.lerp(nave.getPosicion(), delta);
 		
-		rotacion += Gdx.graphics.getDeltaTime() * VELOCIDAD_ROTACION;
+		rotacion += delta * VELOCIDAD_ROTACION;
 		
 		if(rotacion >360)
 			rotacion -= 360;
 		
 		super.update(nave);
+		
 	}
 
 }

@@ -1,7 +1,10 @@
 package us.andresgarcia.trabajadoresenojados.vistas;
 
+import java.util.Iterator;
+
+import us.andresgarcia.trabajadoresenojados.modelos.Bala;
+import us.andresgarcia.trabajadoresenojados.modelos.Enemigo;
 import us.andresgarcia.trabajadoresenojados.modelos.Nave;
-import us.andresgarcia.trabajadoresenojados.modelos.EnemigoCircular;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -12,20 +15,28 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.utils.Array;
 
 public class RenderizarMundo {
 	
 	Mundo mundo;
 	SpriteBatch superficieDibujo;
 	Nave nave;
-	EnemigoCircular enemigoCircular;
 	OrthographicCamera camara;
-	Texture texturaNave, texturaEnemigoCircular;
+	Texture texturaNave, texturaEnemigoCircular, texturaBala;
 	float ancho, alto;
-	ShapeRenderer renderizadoCuerpo; 
+	ShapeRenderer renderizadorRectangulos;
+	Array<Enemigo> enemigos;
+	Array<Bala> balas;
+	Iterator<Bala> iteradorBalas;
+	Iterator<Enemigo> iteradorEnemigos;
+	Bala bala;
+	Enemigo enemigo;
 	
 	public RenderizarMundo(Mundo mundo){
+		
 		this.mundo = mundo;
+		mundo.setRenderizadorMundo(this);
 		
 		ancho = Gdx.graphics.getWidth() / 40;
 		alto = Gdx.graphics.getHeight() / 40;
@@ -43,8 +54,13 @@ public class RenderizarMundo {
 		texturaEnemigoCircular = new Texture("data/enemigoCircular.png");
 		texturaEnemigoCircular.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		
-		renderizadoCuerpo = new ShapeRenderer();
-
+		
+		texturaBala = new Texture("data/bala.png");
+		texturaBala.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
+		
+		
+		renderizadorRectangulos = new ShapeRenderer();
 	}
 	
 	public void render(){
@@ -53,32 +69,15 @@ public class RenderizarMundo {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
 		nave = mundo.getNave();
-		enemigoCircular = mundo.getEnemigoCircular();
+		enemigos = mundo.getEnemigos();
+		balas = mundo.getBalas();
 		
 		//mueve la camara
 		camara.position.set(nave.getPosicion().x, nave.getPosicion().y, 0);
 		camara.update();
 		
 		superficieDibujo.setProjectionMatrix(camara.combined);
-		
 		superficieDibujo.begin();
-		
-		superficieDibujo.draw(texturaEnemigoCircular, 
-							enemigoCircular.getPosicion().x, 
-							enemigoCircular.getPosicion().y, 
-							enemigoCircular.getAncho()/2, 
-							enemigoCircular.getAlto()/2, 
-							enemigoCircular.getAncho(), 
-							enemigoCircular.getAlto(), 
-							1, 
-							1, 
-							enemigoCircular.getRotacion(), 
-							0, 
-							0, 
-							texturaEnemigoCircular.getWidth(), 
-							texturaEnemigoCircular.getHeight(),
-							false,
-							false);
 		
 		superficieDibujo.draw(texturaNave, //texture the Texture 
 							  nave.getPosicion().x, //x the x-coordinate in screen space
@@ -96,23 +95,93 @@ public class RenderizarMundo {
 							  texturaNave.getHeight(), // srcHeight the source height in pixels
 							  false, // flipX whether to flip the sprite horizontally
 							  false); // flipY whether to flip the sprite vertically
+		
+		
+		iteradorEnemigos = enemigos.iterator();
+		while(iteradorEnemigos.hasNext()){
+			enemigo = iteradorEnemigos.next();
+			
+			superficieDibujo.draw(texturaEnemigoCircular, 
+					enemigo.getPosicion().x, 
+					enemigo.getPosicion().y, 
+					enemigo.getAncho()/2, 
+					enemigo.getAlto()/2, 
+					enemigo.getAncho(), 
+					enemigo.getAlto(), 
+					1, 
+					1, 
+					enemigo.getRotacion(), 
+					0, 
+					0, 
+					texturaEnemigoCircular.getWidth(), 
+					texturaEnemigoCircular.getHeight(),
+					false,
+					false);	
+		}
+		
+	
+		
+		iteradorBalas = balas.iterator();
+		while(iteradorBalas.hasNext()){
+			bala = iteradorBalas.next();
+			
+			superficieDibujo.draw(texturaBala, 
+					bala.getPosicion().x, 
+					bala.getPosicion().y, 
+					bala.getAncho()/2, 
+					bala.getAlto()/2, 
+					bala.getAncho(), 
+					bala.getAlto(), 
+					1, 
+					1, 
+					bala.getRotacion(), 
+					0, 
+					0, 
+					texturaBala.getWidth(), 
+					texturaBala.getHeight(),
+					false,
+					false);
+		}
+		
 		superficieDibujo.end();
 		
-		renderizadoCuerpo.setProjectionMatrix(camara.combined);
-		renderizadoCuerpo.begin(ShapeType.Rectangle);
-		renderizadoCuerpo.setColor(Color.CYAN);
-		renderizadoCuerpo.rect(nave.getLimites().x, nave.getLimites().y, nave.getLimites().width, nave.getLimites().height);
-		renderizadoCuerpo.setColor(Color.RED);
-		renderizadoCuerpo.rect(enemigoCircular.getLimites().x, enemigoCircular.getLimites().y, enemigoCircular.getLimites().width, enemigoCircular.getLimites().height);
-		renderizadoCuerpo.end();
+		renderizadorRectangulos.setProjectionMatrix(camara.combined);
+		renderizadorRectangulos.begin(ShapeType.Rectangle);
+		renderizadorRectangulos.setColor(Color.CYAN);
+		renderizadorRectangulos.rect(nave.getLimites().x, nave.getLimites().y, nave.getLimites().width, nave.getLimites().height);
+		renderizadorRectangulos.setColor(Color.RED);
 		
+
+		iteradorEnemigos = enemigos.iterator();
+		while(iteradorEnemigos.hasNext()){
+			enemigo = iteradorEnemigos.next();
+			renderizadorRectangulos.rect(enemigo.getLimites().x, enemigo.getLimites().y, enemigo.getLimites().width, enemigo.getLimites().height);
+		}
+		
+		
+		
+		iteradorBalas = balas.iterator();
+		while(iteradorBalas.hasNext()){
+			bala = iteradorBalas.next();
+			renderizadorRectangulos.rect(bala.getLimites().x, bala.getLimites().y, bala.getLimites().width, bala.getLimites().height);
+		}
+		
+
+		renderizadorRectangulos.end();
 		
 	}
+	
+	
+	public OrthographicCamera getCamara(){
+		return camara;
+	}
+	
+	
 	
 	public void dispose(){
 		superficieDibujo.dispose();
 		texturaNave.dispose();
-		renderizadoCuerpo.dispose();
+		renderizadorRectangulos.dispose();
 	}
 
 }
