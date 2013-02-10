@@ -1,11 +1,10 @@
 package us.andresgarcia.trabajadoresenojados;
 
 
-//import us.andresgarcia.trabajadoresenojados.pantallas.PantallaBienvenida;
-import us.andresgarcia.trabajadoresenojados.pantallas.PantallaJuego;
+import us.andresgarcia.trabajadoresenojados.pantallas.PantallaBienvenida;
+import us.andresgarcia.trabajadoresenojados.vistas.AdministradorSonidos;
 
 import com.badlogic.gdx.Game;
-//import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.FPSLogger;
 
 
@@ -19,13 +18,16 @@ public class TrabajadoresEnojados extends Game {
 	@Override
 	public void create() {		
 		//setScreen(new PantallaBienvenida(this));
+		//setScreen(new PantallaJuego(this));
 		informacionPantallaFPS = new FPSLogger();
-		setScreen(new PantallaJuego(this));
+		AdministradorSonidos.iniciarMusica(true);
+		setScreen(new PantallaBienvenida(this));
 	}
 
 	@Override
 	public void dispose() {
 		super.dispose();
+		AdministradorSonidos.dispose();
 	}
 
 	@Override

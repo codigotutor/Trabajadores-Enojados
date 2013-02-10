@@ -59,7 +59,7 @@ public class Mundo {
 			enemigo.avanzar(Gdx.graphics.getDeltaTime(), nave);
 			
 			if(nave.getLimites().overlaps(enemigo.getLimites()))
-				Gdx.app.log(TrabajadoresEnojados.LOG, "contacto!!!!");	
+				Gdx.app.log(TrabajadoresEnojados.LOG, "Contacto con nave!!!!");	
 		}
 		
 		
@@ -71,9 +71,10 @@ public class Mundo {
 				enemigo = iteradorEnemigos.next();
 
 				if(enemigo.getLimites().overlaps(bala.getLimites())){
-					Gdx.app.log(TrabajadoresEnojados.LOG, "enemigo cogido");
+					Gdx.app.log(TrabajadoresEnojados.LOG, "Le pegue!!!!");
 					iteradorEnemigos.remove();
-					iteradorBalas.remove();					
+					iteradorBalas.remove();	
+					AdministradorSonidos.explosion();
 				}
 			}
 		}

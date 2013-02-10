@@ -90,6 +90,9 @@ public class ManejadorEntrada implements InputProcessor{
 		nave = mundo.getNave();
 		mundo.addBalas(new Bala(Bala.VELOCIDAD, 0, .1f, 8/20f, new Vector2(nave.getPosicion().x + nave.getAncho()/2, nave.getPosicion().y + nave.getAlto()/2), 
 							new Vector2(vec2Toque.sub(nave.getPosicion()).nor())));
+		
+		AdministradorSonidos.disparo();
+		
 		return true;
 	}
 

@@ -54,6 +54,7 @@ public class PantallaJuego implements Screen {
 	@Override
 	public void dispose() {
 		mundo.dispose();
+		renderizar.dispose();
 	}
 
 }

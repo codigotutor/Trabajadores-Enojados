@@ -212,6 +212,8 @@ public class RenderizarMundo {
 		superficieDibujo.dispose();
 		texturaNave.dispose();
 		renderizadorRectangulos.dispose();
+		texturaEnemigoCircular.dispose();
+		texturaBala.dispose();
 	}
 
 }
