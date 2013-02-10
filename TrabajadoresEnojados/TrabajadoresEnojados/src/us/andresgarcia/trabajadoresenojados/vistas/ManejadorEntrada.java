@@ -88,7 +88,7 @@ public class ManejadorEntrada implements InputProcessor{
 		mundo.getRenderizadorMundo().getCamara().unproject(toque);
 		vec2Toque.set(toque.x, toque.y);
 		nave = mundo.getNave();
-		mundo.addBalas(new Bala(Bala.VELOCIDAD, 0, .1f, 8/20f, new Vector2(nave.getPosicion().x, nave.getPosicion().y), 
+		mundo.addBalas(new Bala(Bala.VELOCIDAD, 0, .1f, 8/20f, new Vector2(nave.getPosicion().x + nave.getAncho()/2, nave.getPosicion().y + nave.getAlto()/2), 
 							new Vector2(vec2Toque.sub(nave.getPosicion()).nor())));
 		return true;
 	}

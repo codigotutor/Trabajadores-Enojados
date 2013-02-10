@@ -6,18 +6,20 @@ import us.andresgarcia.trabajadoresenojados.pantallas.PantallaJuego;
 
 import com.badlogic.gdx.Game;
 //import com.badlogic.gdx.graphics.FPSLogger;
+import com.badlogic.gdx.graphics.FPSLogger;
 
 
 public class TrabajadoresEnojados extends Game {
 
 	public static final String VERSION = "0.0.0.02 Pre-Alpha";
 	public static final String LOG = "Trabajadores Enojados";
-	//FPSLogger informacionPantallaFPS;
+	public static final Boolean DEBUG = false;
+	FPSLogger informacionPantallaFPS;
 	
 	@Override
 	public void create() {		
 		//setScreen(new PantallaBienvenida(this));
-		//informacionPantallaFPS = new FPSLogger();
+		informacionPantallaFPS = new FPSLogger();
 		setScreen(new PantallaJuego(this));
 	}
 
@@ -29,7 +31,7 @@ public class TrabajadoresEnojados extends Game {
 	@Override
 	public void render() {		
 		super.render();
-		//informacionPantallaFPS.log();
+		informacionPantallaFPS.log();
 	}
 
 	@Override

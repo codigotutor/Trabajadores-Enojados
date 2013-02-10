@@ -1,7 +1,9 @@
 package us.andresgarcia.trabajadoresenojados.vistas;
 
+import java.io.IOException;
 import java.util.Iterator;
 
+import us.andresgarcia.trabajadoresenojados.TrabajadoresEnojados;
 import us.andresgarcia.trabajadoresenojados.modelos.Bala;
 import us.andresgarcia.trabajadoresenojados.modelos.Enemigo;
 import us.andresgarcia.trabajadoresenojados.modelos.Nave;
@@ -12,6 +14,8 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.g2d.ParticleEmitter;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -32,6 +36,7 @@ public class RenderizarMundo {
 	Iterator<Enemigo> iteradorEnemigos;
 	Bala bala;
 	Enemigo enemigo;
+	ParticleEmitter  particulaPunto;
 	
 	public RenderizarMundo(Mundo mundo){
 		
@@ -59,7 +64,19 @@ public class RenderizarMundo {
 		texturaBala.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		
 		
+		particulaPunto = new ParticleEmitter();
+		try {
+			particulaPunto.load(Gdx.files.internal("data/efectoParticleEditor").reader(2024));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
+		Texture texturaPelota = new Texture(Gdx.files.internal("data/particulaBlancaRedonda.png"));
+		Sprite pelota = new Sprite(texturaPelota);
+		particulaPunto.setSprite(pelota);
+		particulaPunto.getScale().setHigh(0.3f);
+		particulaPunto.start();
+
 		renderizadorRectangulos = new ShapeRenderer();
 	}
 	
@@ -72,12 +89,19 @@ public class RenderizarMundo {
 		enemigos = mundo.getEnemigos();
 		balas = mundo.getBalas();
 		
+		
+		particulaPunto.setPosition(nave.getPosicion().x + nave.getAncho()/2, nave.getPosicion().y+ nave.getAncho()/2);
+		setRotacionParticulaPunto();
+		
+		
 		//mueve la camara
 		camara.position.set(nave.getPosicion().x, nave.getPosicion().y, 0);
 		camara.update();
 		
 		superficieDibujo.setProjectionMatrix(camara.combined);
 		superficieDibujo.begin();
+		
+		particulaPunto.draw(superficieDibujo,Gdx.graphics.getDeltaTime());
 		
 		superficieDibujo.draw(texturaNave, //texture the Texture 
 							  nave.getPosicion().x, //x the x-coordinate in screen space
@@ -145,33 +169,39 @@ public class RenderizarMundo {
 		
 		superficieDibujo.end();
 		
-		renderizadorRectangulos.setProjectionMatrix(camara.combined);
-		renderizadorRectangulos.begin(ShapeType.Rectangle);
-		renderizadorRectangulos.setColor(Color.CYAN);
-		renderizadorRectangulos.rect(nave.getLimites().x, nave.getLimites().y, nave.getLimites().width, nave.getLimites().height);
-		renderizadorRectangulos.setColor(Color.RED);
 		
-
-		iteradorEnemigos = enemigos.iterator();
-		while(iteradorEnemigos.hasNext()){
-			enemigo = iteradorEnemigos.next();
-			renderizadorRectangulos.rect(enemigo.getLimites().x, enemigo.getLimites().y, enemigo.getLimites().width, enemigo.getLimites().height);
+		if(TrabajadoresEnojados.DEBUG){
+			renderizadorRectangulos.setProjectionMatrix(camara.combined);
+			renderizadorRectangulos.begin(ShapeType.Rectangle);
+			renderizadorRectangulos.setColor(Color.CYAN);
+			renderizadorRectangulos.rect(nave.getLimites().x, nave.getLimites().y, nave.getLimites().width, nave.getLimites().height);
+			renderizadorRectangulos.setColor(Color.RED);
+		
+			iteradorEnemigos = enemigos.iterator();
+			while(iteradorEnemigos.hasNext()){
+				enemigo = iteradorEnemigos.next();
+				renderizadorRectangulos.rect(enemigo.getLimites().x, enemigo.getLimites().y, enemigo.getLimites().width, enemigo.getLimites().height);
+			}
+		
+			iteradorBalas = balas.iterator();
+			while(iteradorBalas.hasNext()){
+				bala = iteradorBalas.next();
+				renderizadorRectangulos.rect(bala.getLimites().x, bala.getLimites().y, bala.getLimites().width, bala.getLimites().height);
+			}
+		
+			renderizadorRectangulos.end();
 		}
-		
-		
-		
-		iteradorBalas = balas.iterator();
-		while(iteradorBalas.hasNext()){
-			bala = iteradorBalas.next();
-			renderizadorRectangulos.rect(bala.getLimites().x, bala.getLimites().y, bala.getLimites().width, bala.getLimites().height);
-		}
-		
-
-		renderizadorRectangulos.end();
-		
 	}
 	
 	
+	private void setRotacionParticulaPunto() {
+		float angulo = nave.getRotacion();
+		particulaPunto.getAngle().setLow(angulo + 270);		
+		particulaPunto.getAngle().setHighMin(angulo+270-45);
+		particulaPunto.getAngle().setHighMax(angulo+270+45);
+		
+	}
+
 	public OrthographicCamera getCamara(){
 		return camara;
 	}

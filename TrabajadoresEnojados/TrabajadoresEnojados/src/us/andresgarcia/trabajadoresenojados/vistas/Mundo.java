@@ -45,22 +45,31 @@ public class Mundo {
 	public void update(){
 		nave.update();
 		
+		
 		iteradorBalas = balas.iterator();
 		while(iteradorBalas.hasNext()){
 			bala = iteradorBalas.next();
 			bala.update(nave);
+		}
+		
+		
+		iteradorEnemigos = enemigos.iterator();
+		while(iteradorEnemigos.hasNext()){
+			enemigo = iteradorEnemigos.next();
+			enemigo.avanzar(Gdx.graphics.getDeltaTime(), nave);
 			
+			if(nave.getLimites().overlaps(enemigo.getLimites()))
+				Gdx.app.log(TrabajadoresEnojados.LOG, "contacto!!!!");	
+		}
+		
+		
+		iteradorBalas = balas.iterator();
+		while(iteradorBalas.hasNext()){
+			bala = iteradorBalas.next();
 			iteradorEnemigos = enemigos.iterator();
-			
 			while(iteradorEnemigos.hasNext()){
 				enemigo = iteradorEnemigos.next();
-				enemigo.avanzar(Gdx.graphics.getDeltaTime(), nave);
-				
-				
-				if(nave.getLimites().overlaps(enemigo.getLimites()))
-					Gdx.app.log(TrabajadoresEnojados.LOG, "contacto!!!!");
-				
-				
+
 				if(enemigo.getLimites().overlaps(bala.getLimites())){
 					Gdx.app.log(TrabajadoresEnojados.LOG, "enemigo cogido");
 					iteradorEnemigos.remove();
